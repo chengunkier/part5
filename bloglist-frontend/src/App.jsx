@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import Blog from './components/Blog'
 import LoginForm from './components/LoginForm'
-import BlogForm from './components/BlogForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -16,24 +15,11 @@ const App = () => {
     blogService.getAll().then(blogs => setBlogs(blogs))
   }, [])
 
-  useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      setUser(user)
-      blogService.setToken(user.token)
-    }
-  }, [])
-
   const handleLogin = async (event) => {
     event.preventDefault()
 
     try {
       const user = await loginService.login({ username, password })
-
-      window.localStorage.setItem(
-        'loggedBlogappUser', JSON.stringify(user)
-      )
 
       blogService.setToken(user.token)
       setUser(user)
@@ -41,24 +27,6 @@ const App = () => {
       setPassword('')
     } catch (exception) {
       setErrorMessage('wrong username or password')
-      setTimeout(() => setErrorMessage(null), 5000)
-    }
-  }
-
-  const handleLogout = () => {
-    window.localStorage.removeItem('loggedBlogappUser')
-    blogService.setToken(null)
-    setUser(null)
-  }
-
-  const createBlog = async (blogObject) => {
-    try {
-      const newBlog = await blogService.create(blogObject)
-      setBlogs(blogs.concat(newBlog))
-      setErrorMessage(`a new blog ${newBlog.title} by ${newBlog.author} added`)
-      setTimeout(() => setErrorMessage(null), 5000)
-    } catch (exception) {
-      setErrorMessage('creating blog failed')
       setTimeout(() => setErrorMessage(null), 5000)
     }
   }
@@ -82,14 +50,7 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
-      {errorMessage && <p style={{ color: 'green' }}>{errorMessage}</p>}
-      <p>
-        {user.name} logged in
-        <button onClick={handleLogout}>logout</button>
-      </p>
-
-      <BlogForm createBlog={createBlog} />
-
+      <p>{user.name} logged in</p>
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}
