@@ -59,6 +59,7 @@ const App = () => {
     setUser(null)
   }
 
+  // App only receives the final object — knows nothing about form field values
   const createBlog = async (blogObject) => {
     try {
       const newBlog = await blogService.create(blogObject)
@@ -103,6 +104,7 @@ const App = () => {
         <button onClick={handleLogout}>logout</button>
       </p>
 
+      {/* App passes only one prop — createBlog function */}
       <Togglable buttonLabel="create new blog">
         <BlogForm createBlog={createBlog} />
       </Togglable>
