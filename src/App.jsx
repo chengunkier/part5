@@ -76,7 +76,9 @@ const App = () => {
     try {
       const returnedBlog = await blogService.update(updatedBlog.id, updatedBlog)
       setBlogs(blogs.map(blog =>
-        blog.id === returnedBlog.id ? returnedBlog : blog
+        blog.id === returnedBlog.id
+          ? { ...returnedBlog, user: blog.user }  // keep original populated user so name stays visible
+          : blog
       ))
     } catch (exception) {
       showNotification('liking blog failed', 'error')
