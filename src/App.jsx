@@ -59,7 +59,6 @@ const App = () => {
     setUser(null)
   }
 
-  // App only receives the final object — knows nothing about form field values
   const createBlog = async (blogObject) => {
     try {
       const newBlog = await blogService.create(blogObject)
@@ -70,6 +69,17 @@ const App = () => {
       )
     } catch (exception) {
       showNotification('creating blog failed', 'error')
+    }
+  }
+
+  const handleLike = async (updatedBlog) => {
+    try {
+      const returnedBlog = await blogService.update(updatedBlog.id, updatedBlog)
+      setBlogs(blogs.map(blog =>
+        blog.id === returnedBlog.id ? returnedBlog : blog
+      ))
+    } catch (exception) {
+      showNotification('liking blog failed', 'error')
     }
   }
 
@@ -104,13 +114,12 @@ const App = () => {
         <button onClick={handleLogout}>logout</button>
       </p>
 
-      {/* App passes only one prop — createBlog function */}
       <Togglable buttonLabel="create new blog">
         <BlogForm createBlog={createBlog} />
       </Togglable>
 
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} handleLike={handleLike} />
       )}
     </div>
   )
