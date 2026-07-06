@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const Blog = ({ blog, handleLike }) => {
+const Blog = ({ blog, handleLike, handleDelete, user }) => {
   const [visible, setVisible] = useState(false)
 
   const blogStyle = {
@@ -19,6 +19,15 @@ const Blog = ({ blog, handleLike }) => {
     })
   }
 
+  const deleteBlog = () => {
+    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
+      handleDelete(blog.id)
+    }
+  }
+
+  // show delete button only if logged in user is the one who added the blog
+  const showDeleteButton = user && blog.user && user.username === blog.user.username
+
   return (
     <div style={blogStyle}>
       <div>
@@ -35,6 +44,14 @@ const Blog = ({ blog, handleLike }) => {
             <button onClick={likeBlog}>like</button>
           </div>
           <div>{blog.user && blog.user.name}</div>
+          {showDeleteButton && (
+            <button
+              onClick={deleteBlog}
+              style={{ backgroundColor: 'blue', color: 'white' }}
+            >
+              remove
+            </button>
+          )}
         </div>
       )}
     </div>
