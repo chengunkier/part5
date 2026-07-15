@@ -25,7 +25,6 @@ const Blog = ({ blog, handleLike, handleDelete, user }) => {
     }
   }
 
-  // show delete button only if logged in user is the one who added the blog
   const showDeleteButton = user && blog.user && user.username === blog.user.username
 
   return (

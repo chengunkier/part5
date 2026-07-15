@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "name": "bloglist-frontend",
   "private": true,
   "version": "0.0.0",
@@ -14,13 +13,16 @@
   "dependencies": {
     "axios": "^1.9.0",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.18.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
+    "@playwright/test": "^1.61.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
+    "@types/node": "^26.1.0",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react": "^4.4.1",
@@ -32,18 +34,5 @@
     "jsdom": "^29.1.1",
     "vite": "^6.3.5",
     "vitest": "^4.1.10"
-=======
-  "name": "e2e-tests",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {},
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "devDependencies": {
-    "@playwright/test": "^1.61.1",
-    "@types/node": "^26.1.0"
->>>>>>> 91cc276aed1ca3f545a26ff7bc555651f19c1902
   }
 }
