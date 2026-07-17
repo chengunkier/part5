@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom'
-import Blog from './components/Blog'
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate, useParams } from 'react-router-dom'
 import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
@@ -46,22 +45,66 @@ const LoginForm = ({ handleLogin, username, setUsername, password, setPassword }
   )
 }
 
-const BlogList = ({ blogs, user, handleLike, handleDelete }) => {
+const BlogList = ({ blogs }) => {
   return (
     <div>
       <h2>blogs</h2>
-      {[...blogs]
-        .sort((a, b) => b.likes - a.likes)
-        .map(blog =>
-          <Blog
-            key={blog.id}
-            blog={blog}
-            handleLike={handleLike}
-            handleDelete={handleDelete}
-            user={user}
-          />
-        )
-      }
+      <ul>
+        {[...blogs]
+          .sort((a, b) => b.likes - a.likes)
+          .map(blog =>
+            <li key={blog.id}>
+              <Link to={`/blogs/${blog.id}`}>
+                {blog.title} by {blog.author}
+              </Link>
+            </li>
+          )
+        }
+      </ul>
+    </div>
+  )
+}
+
+const SingleBlog = ({ blogs, user, handleLike, handleDelete }) => {
+  const { id } = useParams()
+  const navigate = useNavigate()
+  const blog = blogs.find(b => b.id === id)
+
+  if (!blog) return null
+
+  const likeBlog = () => {
+    handleLike({
+      ...blog,
+      user: blog.user ? blog.user.id || blog.user._id : null,
+      likes: blog.likes + 1
+    })
+  }
+
+  const deleteBlog = async () => {
+    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
+      await handleDelete(blog.id)
+      navigate('/')
+    }
+  }
+
+  const showDeleteButton = user && blog.user && user.username === blog.user.username
+
+  return (
+    <div>
+      <h2>{blog.user && blog.user.name}: {blog.title}</h2>
+      <div>
+        <a href={blog.url}>{blog.url}</a>
+      </div>
+      <div>
+        likes {blog.likes}
+        {user && <button onClick={likeBlog}>like</button>}
+      </div>
+      <div>Added by {blog.user && blog.user.name}</div>
+      {showDeleteButton && (
+        <div>
+          <button onClick={deleteBlog}>remove</button>
+        </div>
+      )}
     </div>
   )
 }
@@ -155,8 +198,12 @@ const AppContent = () => {
       <Routes>
         <Route
           path="/"
+          element={<BlogList blogs={blogs} />}
+        />
+        <Route
+          path="/blogs/:id"
           element={
-            <BlogList
+            <SingleBlog
               blogs={blogs}
               user={user}
               handleLike={handleLike}
