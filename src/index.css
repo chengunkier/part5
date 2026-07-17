@@ -1,0 +1,118 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+nav {
+  margin-bottom: 20px;
+}
+
+nav a {
+  margin-right: 10px;
+}
+
+.login-form {
+  max-width: 300px;
+  margin-top: 20px;
+}
+
+.login-form h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.login-form .form-group {
+  margin-bottom: 15px;
+}
+
+.login-form .form-group input {
+  display: block;
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  padding: 8px 0;
+  font-size: 16px;
+  outline: none;
+  background: transparent;
+}
+
+.login-form .form-group input:focus {
+  border-bottom: 2px solid #4285f4;
+}
+
+.login-form .form-group label {
+  display: block;
+  color: #888;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.login-form button {
+  margin-top: 20px;
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.login-form button:hover {
+  background-color: #3367d6;
+}
+
+.create-form {
+  max-width: 350px;
+  margin-top: 20px;
+}
+
+.create-form h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.create-form .form-group {
+  margin-bottom: 12px;
+}
+
+.create-form .form-group label {
+  display: none;
+}
+
+.create-form .form-group input {
+  width: 100%;
+  border: 1px solid #ccc;
+  padding: 10px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.create-form .form-group input:focus {
+  border-color: #4285f4;
+}
+
+.create-form button {
+  margin-top: 10px;
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.create-form button:hover {
+  background-color: #3367d6;
+}

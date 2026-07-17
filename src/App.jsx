@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate, useParams } from 'react-router-dom'
 import Notification from './components/Notification'
 import SingleBlog from './components/SingleBlog'
+import CreateBlog from './components/CreateBlog'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -22,11 +23,11 @@ const Navigation = ({ user, handleLogout }) => {
 
 const LoginForm = ({ handleLogin, username, setUsername, password, setPassword }) => {
   return (
-    <div>
+    <div className="login-form">
       <h2>Log in to application</h2>
       <form onSubmit={handleLogin}>
-        <div>
-          username
+        <div className="form-group">
+          <label>username</label>
           <input
             type="text"
             value={username}
@@ -34,8 +35,8 @@ const LoginForm = ({ handleLogin, username, setUsername, password, setPassword }
             onChange={({ target }) => setUsername(target.value)}
           />
         </div>
-        <div>
-          password
+        <div className="form-group">
+          <label>password</label>
           <input
             type="password"
             value={password}
@@ -65,56 +66,6 @@ const BlogList = ({ blogs }) => {
           )
         }
       </ul>
-    </div>
-  )
-}
-
-const CreateBlog = ({ createBlog }) => {
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
-
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    createBlog({ title, author, url })
-    setTitle('')
-    setAuthor('')
-    setUrl('')
-  }
-
-  return (
-    <div>
-      <h2>create new</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          title:
-          <input
-            type="text"
-            value={title}
-            name="Title"
-            onChange={({ target }) => setTitle(target.value)}
-          />
-        </div>
-        <div>
-          author:
-          <input
-            type="text"
-            value={author}
-            name="Author"
-            onChange={({ target }) => setAuthor(target.value)}
-          />
-        </div>
-        <div>
-          url:
-          <input
-            type="text"
-            value={url}
-            name="Url"
-            onChange={({ target }) => setUrl(target.value)}
-          />
-        </div>
-        <button type="submit">create</button>
-      </form>
     </div>
   )
 }
