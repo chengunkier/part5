@@ -8,6 +8,9 @@ const Navigation = ({ user, handleLogout }) => {
   return (
     <nav>
       <Link to="/">blogs</Link>
+      {user && (
+        <Link to="/create"> new blog</Link>
+      )}
       {user
         ? <button onClick={handleLogout}>logout</button>
         : <Link to="/login"> login</Link>
@@ -61,6 +64,56 @@ const BlogList = ({ blogs }) => {
           )
         }
       </ul>
+    </div>
+  )
+}
+
+const CreateBlog = ({ createBlog }) => {
+  const [title, setTitle] = useState('')
+  const [author, setAuthor] = useState('')
+  const [url, setUrl] = useState('')
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    createBlog({ title, author, url })
+    setTitle('')
+    setAuthor('')
+    setUrl('')
+  }
+
+  return (
+    <div>
+      <h2>create new</h2>
+      <form onSubmit={handleSubmit}>
+        <div>
+          title:
+          <input
+            type="text"
+            value={title}
+            name="Title"
+            onChange={({ target }) => setTitle(target.value)}
+          />
+        </div>
+        <div>
+          author:
+          <input
+            type="text"
+            value={author}
+            name="Author"
+            onChange={({ target }) => setAuthor(target.value)}
+          />
+        </div>
+        <div>
+          url:
+          <input
+            type="text"
+            value={url}
+            name="Url"
+            onChange={({ target }) => setUrl(target.value)}
+          />
+        </div>
+        <button type="submit">create</button>
+      </form>
     </div>
   )
 }
@@ -165,6 +218,20 @@ const AppContent = () => {
     navigate('/')
   }
 
+  const createBlog = async (blogObject) => {
+    try {
+      const newBlog = await blogService.create(blogObject)
+      setBlogs(blogs.concat(newBlog))
+      showNotification(
+        `a new blog ${newBlog.title} by ${newBlog.author} added`,
+        'success'
+      )
+      navigate('/')
+    } catch (exception) {
+      showNotification('creating blog failed', 'error')
+    }
+  }
+
   const handleLike = async (updatedBlog) => {
     try {
       const returnedBlog = await blogService.update(updatedBlog.id, updatedBlog)
@@ -183,6 +250,7 @@ const AppContent = () => {
       await blogService.remove(id)
       setBlogs(blogs.filter(blog => blog.id !== id))
       showNotification('blog removed successfully', 'success')
+      navigate('/')
     } catch (exception) {
       showNotification('removing blog failed', 'error')
     }
@@ -210,6 +278,10 @@ const AppContent = () => {
               handleDelete={handleDelete}
             />
           }
+        />
+        <Route
+          path="/create"
+          element={<CreateBlog createBlog={createBlog} />}
         />
         <Route
           path="/login"
