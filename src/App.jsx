@@ -9,14 +9,15 @@ import loginService from './services/login'
 const Navigation = ({ user, handleLogout }) => {
   return (
     <nav>
-      <Link to="/">blogs</Link>
-      {user && (
-        <Link to="/create"> new blog</Link>
-      )}
-      {user
-        ? <button onClick={handleLogout}>logout</button>
-        : <Link to="/login"> login</Link>
-      }
+      <Link to="/" className="nav-brand">Blog App</Link>
+      <div className="nav-links">
+        <Link to="/">blogs</Link>
+        {user && <Link to="/create">new blog</Link>}
+        {user
+          ? <button onClick={handleLogout}>logout</button>
+          : <Link to="/login">login</Link>
+        }
+      </div>
     </nav>
   )
 }
@@ -167,43 +168,45 @@ const AppContent = () => {
   return (
     <div>
       <Navigation user={user} handleLogout={handleLogout} />
-      <Notification
-        message={notification.message}
-        type={notification.type}
-      />
-      <Routes>
-        <Route
-          path="/"
-          element={<BlogList blogs={blogs} />}
+      <div className="content">
+        <Notification
+          message={notification.message}
+          type={notification.type}
         />
-        <Route
-          path="/blogs/:id"
-          element={
-            <SingleBlog
-              blogs={blogs}
-              user={user}
-              handleLike={handleLike}
-              handleDelete={handleDelete}
-            />
-          }
-        />
-        <Route
-          path="/create"
-          element={<CreateBlog createBlog={createBlog} />}
-        />
-        <Route
-          path="/login"
-          element={
-            <LoginForm
-              handleLogin={handleLogin}
-              username={username}
-              setUsername={setUsername}
-              password={password}
-              setPassword={setPassword}
-            />
-          }
-        />
-      </Routes>
+        <Routes>
+          <Route
+            path="/"
+            element={<BlogList blogs={blogs} />}
+          />
+          <Route
+            path="/blogs/:id"
+            element={
+              <SingleBlog
+                blogs={blogs}
+                user={user}
+                handleLike={handleLike}
+                handleDelete={handleDelete}
+              />
+            }
+          />
+          <Route
+            path="/create"
+            element={<CreateBlog createBlog={createBlog} />}
+          />
+          <Route
+            path="/login"
+            element={
+              <LoginForm
+                handleLogin={handleLogin}
+                username={username}
+                setUsername={setUsername}
+                password={password}
+                setPassword={setPassword}
+              />
+            }
+          />
+        </Routes>
+      </div>
     </div>
   )
 }

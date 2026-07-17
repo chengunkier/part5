@@ -25,21 +25,20 @@ const SingleBlog = ({ blogs, user, handleLike, handleDelete }) => {
   const showDeleteButton = user && blog.user && user.username === blog.user.username
 
   return (
-    <div>
-      <h2>{blog.user && blog.user.name}: {blog.title}</h2>
-      <div>
-        <a href={blog.url}>{blog.url}</a>
+    <div className="single-blog">
+      <h2 className="single-blog-title">{blog.title}</h2>
+      <p className="single-blog-author">by {blog.author}</p>
+      <a className="single-blog-url" href={blog.url}>{blog.url}</a>
+      <p className="single-blog-added">Added by {blog.user && blog.user.name}</p>
+      <div className="single-blog-actions">
+        <span className="single-blog-likes">{blog.likes} likes</span>
+        {user && (
+          <button className="btn-like" onClick={likeBlog}>like</button>
+        )}
+        {showDeleteButton && (
+          <button className="btn-remove" onClick={deleteBlog}>remove</button>
+        )}
       </div>
-      <div>
-        likes {blog.likes}
-        {user && <button onClick={likeBlog}>like</button>}
-      </div>
-      <div>Added by {blog.user && blog.user.name}</div>
-      {showDeleteButton && (
-        <div>
-          <button onClick={deleteBlog}>remove</button>
-        </div>
-      )}
     </div>
   )
 }
